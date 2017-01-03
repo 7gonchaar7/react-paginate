@@ -50,13 +50,14 @@ var PageView = function (_React$Component) {
         }
       }
       var query = page !== 1 ? { page: page } : {};
+      var linkTo = selected ? {} : { pathname: pathname, query: query };
 
       return _react2.default.createElement(
         'li',
         { className: cssClassName },
         _react2.default.createElement(
           _Link2.default,
-          { to: { pathname: pathname, query: query }, className: linkClassName },
+          { to: linkTo, className: linkClassName },
           page
         )
       );

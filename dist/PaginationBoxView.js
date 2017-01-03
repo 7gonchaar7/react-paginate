@@ -158,18 +158,21 @@ var PaginationBoxView = function (_Component) {
           pageCount = _props.pageCount,
           disabledClassName = _props.disabledClassName,
           forcePage = _props.forcePage;
+      var selected = this.state.selected;
 
-      var previousClasses = (0, _classnames2.default)(previousClassName, _defineProperty({}, disabledClassName, this.state.selected === 0));
+      var previousClasses = (0, _classnames2.default)(previousClassName, _defineProperty({}, disabledClassName, selected === 0));
 
-      var nextClasses = (0, _classnames2.default)(nextClassName, _defineProperty({}, disabledClassName, this.state.selected === pageCount - 1));
+      var nextClasses = (0, _classnames2.default)(nextClassName, _defineProperty({}, disabledClassName, selected === pageCount - 1));
       var relPrev = {};
       var relNext = {};
       if (forcePage > 0) relPrev = { rel: 'prev' };
       if (forcePage < pageCount - 1) relNext = { rel: 'next' };
       var prevLinkQuery = forcePage !== 1 ? { page: forcePage } : {};
       var nextLinkQuery = { page: forcePage + 2 };
-      var prevLinkProps = Object.assign({ to: { pathname: pathname, query: prevLinkQuery } }, relPrev);
-      var nextLinkProps = Object.assign({ to: { pathname: pathname, query: nextLinkQuery } }, relNext);
+      var prevLinkTo = selected === 0 ? {} : { pathname: pathname, query: prevLinkQuery };
+      var nextLinkTo = selected === pageCount - 1 ? {} : { pathname: pathname, query: nextLinkQuery };
+      var prevLinkProps = Object.assign({ to: { prevLinkTo: prevLinkTo } }, relPrev);
+      var nextLinkProps = Object.assign({ to: { nextLinkTo: nextLinkTo } }, relNext);
 
       return _react2.default.createElement(
         'ul',

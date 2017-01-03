@@ -15,10 +15,11 @@ export default class PageView extends React.Component {
       }
     }
     const query = page !== 1 ? { page } : {};
+    const linkTo = selected ? {} : {pathname, query};
  
     return (
         <li className={cssClassName}>
-            <Link to={{pathname, query}} className={linkClassName}>
+            <Link to={linkTo} className={linkClassName}>
               {page}
             </Link>
         </li>
