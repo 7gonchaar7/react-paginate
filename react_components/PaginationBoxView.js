@@ -163,16 +163,12 @@ export default class PaginationBoxView extends Component {
 
     const nextClasses = classNames(nextClassName,
       {[disabledClassName]: selected === pageCount - 1});
-    let relPrev = {};
-    let relNext = {};
-    if (forcePage > 0) relPrev = { rel: 'prev' };
-    if (forcePage < pageCount - 1) relNext = { rel: 'next' };
+    let prevLinkProps = {};
+    let nextLinkProps = {};
     const prevLinkQuery = forcePage !== 1 ? { page: forcePage } : {};
     const nextLinkQuery = { page: forcePage + 2 };
-    const prevLinkTo = selected === 0 ? {} : { pathname, query: prevLinkQuery }
-    const nextLinkTo = selected === pageCount - 1 ? {} : { pathname, query: nextLinkQuery }
-    const prevLinkProps = Object.assign({ to: { prevLinkTo } }, relPrev);
-    const nextLinkProps = Object.assign({ to: { nextLinkTo } }, relNext);
+    if (forcePage > 0) prevLinkProps = { to: { pathname, query: prevLinkQuery }, rel: 'prev' };
+    if (forcePage < pageCount - 1) nextLinkProps = { to: { pathname, query: nextLinkQuery }, rel: 'next' };
     
     return (
       <ul className={containerClassName}>

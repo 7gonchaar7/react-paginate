@@ -163,16 +163,12 @@ var PaginationBoxView = function (_Component) {
       var previousClasses = (0, _classnames2.default)(previousClassName, _defineProperty({}, disabledClassName, selected === 0));
 
       var nextClasses = (0, _classnames2.default)(nextClassName, _defineProperty({}, disabledClassName, selected === pageCount - 1));
-      var relPrev = {};
-      var relNext = {};
-      if (forcePage > 0) relPrev = { rel: 'prev' };
-      if (forcePage < pageCount - 1) relNext = { rel: 'next' };
+      var prevLinkProps = {};
+      var nextLinkProps = {};
       var prevLinkQuery = forcePage !== 1 ? { page: forcePage } : {};
       var nextLinkQuery = { page: forcePage + 2 };
-      var prevLinkTo = selected === 0 ? {} : { pathname: pathname, query: prevLinkQuery };
-      var nextLinkTo = selected === pageCount - 1 ? {} : { pathname: pathname, query: nextLinkQuery };
-      var prevLinkProps = Object.assign({ to: { prevLinkTo: prevLinkTo } }, relPrev);
-      var nextLinkProps = Object.assign({ to: { nextLinkTo: nextLinkTo } }, relNext);
+      if (forcePage > 0) prevLinkProps = { to: { pathname: pathname, query: prevLinkQuery }, rel: 'prev' };
+      if (forcePage < pageCount - 1) nextLinkProps = { to: { pathname: pathname, query: nextLinkQuery }, rel: 'next' };
 
       return _react2.default.createElement(
         'ul',
