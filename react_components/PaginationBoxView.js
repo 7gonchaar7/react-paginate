@@ -84,6 +84,7 @@ export default class PaginationBoxView extends Component {
       for (let index = 0; index < this.props.pageCount; index++) {
         items['key' + index] = <PageView
           selected={this.state.selected === index}
+          pathname={this.props.pathname}
           activeClassName={this.props.activeClassName}
           page={index + 1} />
       }
@@ -113,6 +114,7 @@ export default class PaginationBoxView extends Component {
         let pageView = (
           <PageView
             selected={this.state.selected === index}
+            pathname={this.props.pathname}
             activeClassName={this.props.activeClassName}
             page={index + 1} />
         );
