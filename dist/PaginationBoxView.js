@@ -62,6 +62,7 @@ var PaginationBoxView = function (_Component) {
         for (var index = 0; index < _this.props.pageCount; index++) {
           items['key' + index] = _react2.default.createElement(_PageView2.default, {
             selected: _this.state.selected === index,
+            pathname: _this.props.pathname,
             activeClassName: _this.props.activeClassName,
             page: index + 1 });
         }
@@ -88,6 +89,7 @@ var PaginationBoxView = function (_Component) {
 
           var pageView = _react2.default.createElement(_PageView2.default, {
             selected: _this.state.selected === _index,
+            pathname: _this.props.pathname,
             activeClassName: _this.props.activeClassName,
             page: _index + 1 });
 
