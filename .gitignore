@@ -1,6 +1,7 @@
 *.log
 .DS_Store
 node_modules/
+.idea/
 build/*
 demo/data/data.json
 demo/build/*

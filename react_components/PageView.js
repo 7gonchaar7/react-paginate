@@ -1,29 +1,25 @@
 'use strict';
 
 import React from 'react';
+import Link from 'react-router/lib/Link';
 
 export default class PageView extends React.Component {
   render() {
-    let linkClassName = this.props.pageLinkClassName;
-    let cssClassName = this.props.pageClassName;
-    let onClick = this.props.onClick;
-
-    if (this.props.selected) {
+    const { linkClassName, selected, activeClassName, pathname, page } = this.props;
+    let { cssClassName } = this.props;
+    if (selected) {
       if (typeof(cssClassName) !== 'undefined') {
-        cssClassName = cssClassName + ' ' + this.props.activeClassName;
+        cssClassName = cssClassName + ' ' + activeClassName;
       } else {
-        cssClassName = this.props.activeClassName;
+        cssClassName = activeClassName;
       }
     }
 
     return (
         <li className={cssClassName}>
-            <a onClick={onClick}
-               className={linkClassName}
-               tabIndex="0"
-               onKeyPress={onClick}>
-              {this.props.page}
-            </a>
+            <Link to={{pathname, query: { page }}} className={linkClassName} tabIndex="0">
+              {page}
+            </Link>
         </li>
     );
   }

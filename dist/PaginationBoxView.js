@@ -18,6 +18,10 @@ var _reactAddonsCreateFragment = require('react-addons-create-fragment');
 
 var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
+var _Link = require('react-router/lib/Link');
+
+var _Link2 = _interopRequireDefault(_Link);
+
 var _PageView = require('./PageView');
 
 var _PageView2 = _interopRequireDefault(_PageView);
@@ -44,31 +48,6 @@ var PaginationBoxView = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (PaginationBoxView.__proto__ || Object.getPrototypeOf(PaginationBoxView)).call(this, props));
 
-    _this.handlePreviousPage = function (evt) {
-      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
-      if (_this.state.selected > 0) {
-        _this.handlePageSelected(_this.state.selected - 1, evt);
-      }
-    };
-
-    _this.handleNextPage = function (evt) {
-      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
-      if (_this.state.selected < _this.props.pageCount - 1) {
-        _this.handlePageSelected(_this.state.selected + 1, evt);
-      }
-    };
-
-    _this.handlePageSelected = function (selected, evt) {
-      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
-
-      if (_this.state.selected === selected) return;
-
-      _this.setState({ selected: selected });
-
-      // Call the callback with the new selected item:
-      _this.callCallback(selected);
-    };
-
     _this.callCallback = function (selectedItem) {
       if (typeof _this.props.onPageChange !== "undefined" && typeof _this.props.onPageChange === "function") {
         _this.props.onPageChange({ selected: selectedItem });
@@ -82,10 +61,7 @@ var PaginationBoxView = function (_Component) {
 
         for (var index = 0; index < _this.props.pageCount; index++) {
           items['key' + index] = _react2.default.createElement(_PageView2.default, {
-            onClick: _this.handlePageSelected.bind(null, index),
             selected: _this.state.selected === index,
-            pageClassName: _this.props.pageClassName,
-            pageLinkClassName: _this.props.pageLinkClassName,
             activeClassName: _this.props.activeClassName,
             page: index + 1 });
         }
@@ -111,10 +87,7 @@ var PaginationBoxView = function (_Component) {
           page = _index + 1;
 
           var pageView = _react2.default.createElement(_PageView2.default, {
-            onClick: _this.handlePageSelected.bind(null, _index),
             selected: _this.state.selected === _index,
-            pageClassName: _this.props.pageClassName,
-            pageLinkClassName: _this.props.pageLinkClassName,
             activeClassName: _this.props.activeClassName,
             page: _index + 1 });
 
@@ -175,25 +148,37 @@ var PaginationBoxView = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var disabled = this.props.disabledClassName;
+      var _props = this.props,
+          containerClassName = _props.containerClassName,
+          previousClassName = _props.previousClassName,
+          nextClassName = _props.nextClassName,
+          pathname = _props.pathname,
+          pageCount = _props.pageCount,
+          disabledClassName = _props.disabledClassName,
+          forcePage = _props.forcePage;
 
-      var previousClasses = (0, _classnames2.default)(this.props.previousClassName, _defineProperty({}, disabled, this.state.selected === 0));
+      var previousClasses = (0, _classnames2.default)(previousClassName, _defineProperty({}, disabledClassName, this.state.selected === 0));
 
-      var nextClasses = (0, _classnames2.default)(this.props.nextClassName, _defineProperty({}, disabled, this.state.selected === this.props.pageCount - 1));
+      var nextClasses = (0, _classnames2.default)(nextClassName, _defineProperty({}, disabledClassName, this.state.selected === pageCount - 1));
+      var relPrev = {};
+      var relNext = {};
+      if (forcePage > 0) relPrev = { rel: 'prev' };
+      if (forcePage < pageCount - 1) relNext = { rel: 'next' };
+      var prevLinkQuery = forcePage !== 1 ? { page: forcePage } : {};
+      var nextLinkQuery = { page: forcePage + 2 };
+      var prevLinkProps = Object.assign({ to: { pathname: pathname, query: prevLinkQuery } }, relPrev);
+      var nextLinkProps = Object.assign({ to: { pathname: pathname, query: nextLinkQuery } }, relNext);
 
       return _react2.default.createElement(
         'ul',
-        { className: this.props.containerClassName },
+        { className: containerClassName },
         _react2.default.createElement(
           'li',
           { className: previousClasses },
           _react2.default.createElement(
-            'a',
-            { onClick: this.handlePreviousPage,
-              className: this.props.previousLinkClassName,
-              tabIndex: '0',
-              onKeyPress: this.handlePreviousPage },
-            this.props.previousLabel
+            _Link2.default,
+            prevLinkProps,
+            _react2.default.createElement('i', { className: 'fa fa-chevron-left' })
           )
         ),
         (0, _reactAddonsCreateFragment2.default)(this.pagination()),
@@ -201,12 +186,9 @@ var PaginationBoxView = function (_Component) {
           'li',
           { className: nextClasses },
           _react2.default.createElement(
-            'a',
-            { onClick: this.handleNextPage,
-              className: this.props.nextLinkClassName,
-              tabIndex: '0',
-              onKeyPress: this.handleNextPage },
-            this.props.nextLabel
+            _Link2.default,
+            nextLinkProps,
+            _react2.default.createElement('i', { className: 'fa fa-chevron-right' })
           )
         )
       );
@@ -226,6 +208,7 @@ PaginationBoxView.propTypes = {
   onPageChange: _react.PropTypes.func,
   initialPage: _react.PropTypes.number,
   forcePage: _react.PropTypes.number,
+  pathname: _react.PropTypes.string,
   containerClassName: _react.PropTypes.string,
   pageClassName: _react.PropTypes.string,
   pageLinkClassName: _react.PropTypes.string,

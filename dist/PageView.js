@@ -10,6 +10,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Link = require('react-router/lib/Link');
+
+var _Link2 = _interopRequireDefault(_Link);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30,15 +34,19 @@ var PageView = function (_React$Component) {
   _createClass(PageView, [{
     key: 'render',
     value: function render() {
-      var linkClassName = this.props.pageLinkClassName;
-      var cssClassName = this.props.pageClassName;
-      var onClick = this.props.onClick;
+      var _props = this.props,
+          linkClassName = _props.linkClassName,
+          selected = _props.selected,
+          activeClassName = _props.activeClassName,
+          pathname = _props.pathname,
+          page = _props.page;
+      var cssClassName = this.props.cssClassName;
 
-      if (this.props.selected) {
+      if (selected) {
         if (typeof cssClassName !== 'undefined') {
-          cssClassName = cssClassName + ' ' + this.props.activeClassName;
+          cssClassName = cssClassName + ' ' + activeClassName;
         } else {
-          cssClassName = this.props.activeClassName;
+          cssClassName = activeClassName;
         }
       }
 
@@ -46,12 +54,9 @@ var PageView = function (_React$Component) {
         'li',
         { className: cssClassName },
         _react2.default.createElement(
-          'a',
-          { onClick: onClick,
-            className: linkClassName,
-            tabIndex: '0',
-            onKeyPress: onClick },
-          this.props.page
+          _Link2.default,
+          { to: { pathname: pathname, query: { page: page } }, className: linkClassName, tabIndex: '0' },
+          page
         )
       );
     }
