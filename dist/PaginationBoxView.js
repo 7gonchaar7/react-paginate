@@ -154,6 +154,8 @@ var PaginationBoxView = function (_Component) {
           containerClassName = _props.containerClassName,
           previousClassName = _props.previousClassName,
           nextClassName = _props.nextClassName,
+          previousLabel = _props.previousLabel,
+          nextLabel = _props.nextLabel,
           pathname = _props.pathname,
           pageCount = _props.pageCount,
           disabledClassName = _props.disabledClassName,
@@ -163,8 +165,8 @@ var PaginationBoxView = function (_Component) {
       var previousClasses = (0, _classnames2.default)(previousClassName, _defineProperty({}, disabledClassName, selected === 0));
 
       var nextClasses = (0, _classnames2.default)(nextClassName, _defineProperty({}, disabledClassName, selected === pageCount - 1));
-      var prevLinkProps = {};
-      var nextLinkProps = {};
+      var prevLinkProps = { to: {} };
+      var nextLinkProps = { to: {} };
       var prevLinkQuery = forcePage !== 1 ? { page: forcePage } : {};
       var nextLinkQuery = { page: forcePage + 2 };
       if (forcePage > 0) prevLinkProps = { to: { pathname: pathname, query: prevLinkQuery }, rel: 'prev' };
@@ -179,7 +181,7 @@ var PaginationBoxView = function (_Component) {
           _react2.default.createElement(
             _Link2.default,
             prevLinkProps,
-            _react2.default.createElement('i', { className: 'fa fa-chevron-left' })
+            previousLabel
           )
         ),
         (0, _reactAddonsCreateFragment2.default)(this.pagination()),
@@ -189,7 +191,7 @@ var PaginationBoxView = function (_Component) {
           _react2.default.createElement(
             _Link2.default,
             nextLinkProps,
-            _react2.default.createElement('i', { className: 'fa fa-chevron-right' })
+            nextLabel
           )
         )
       );

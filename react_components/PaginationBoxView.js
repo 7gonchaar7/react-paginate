@@ -155,7 +155,7 @@ export default class PaginationBoxView extends Component {
   };
 
   render() {
-    const { containerClassName, previousClassName, nextClassName,
+    const { containerClassName, previousClassName, nextClassName, previousLabel, nextLabel,
       pathname, pageCount, disabledClassName, forcePage } = this.props;
     const { selected } = this.state;
     const previousClasses = classNames(previousClassName,
@@ -163,24 +163,24 @@ export default class PaginationBoxView extends Component {
 
     const nextClasses = classNames(nextClassName,
       {[disabledClassName]: selected === pageCount - 1});
-    let prevLinkProps = {};
-    let nextLinkProps = {};
+    let prevLinkProps = { to: {} };
+    let nextLinkProps = { to: {} };
     const prevLinkQuery = forcePage !== 1 ? { page: forcePage } : {};
     const nextLinkQuery = { page: forcePage + 2 };
     if (forcePage > 0) prevLinkProps = { to: { pathname, query: prevLinkQuery }, rel: 'prev' };
     if (forcePage < pageCount - 1) nextLinkProps = { to: { pathname, query: nextLinkQuery }, rel: 'next' };
-    
+
     return (
       <ul className={containerClassName}>
         <li className={previousClasses}>
           <Link {...prevLinkProps}>
-            <i className="fa fa-chevron-left"/>
+            {previousLabel}
           </Link>
         </li>
         {createFragment(this.pagination())}
         <li className={nextClasses}>
           <Link {...nextLinkProps}>
-            <i className="fa fa-chevron-right"/>
+            {nextLabel}
           </Link>
         </li>
       </ul>
