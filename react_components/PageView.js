@@ -14,10 +14,11 @@ export default class PageView extends React.Component {
         cssClassName = activeClassName;
       }
     }
-
+    const query = page !== 1 ? { page } : {};
+ 
     return (
         <li className={cssClassName}>
-            <Link to={{pathname, query: { page }}} className={linkClassName} tabIndex="0">
+            <Link to={{pathname, query}} className={linkClassName} tabIndex="0">
               {page}
             </Link>
         </li>

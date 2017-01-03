@@ -49,13 +49,14 @@ var PageView = function (_React$Component) {
           cssClassName = activeClassName;
         }
       }
+      var query = page !== 1 ? { page: page } : {};
 
       return _react2.default.createElement(
         'li',
         { className: cssClassName },
         _react2.default.createElement(
           _Link2.default,
-          { to: { pathname: pathname, query: { page: page } }, className: linkClassName, tabIndex: '0' },
+          { to: { pathname: pathname, query: query }, className: linkClassName, tabIndex: '0' },
           page
         )
       );
